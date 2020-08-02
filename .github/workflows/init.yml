@@ -8,8 +8,6 @@ on:
         default: minor
   repository_dispatch:
     types: changeme
-  schedule:
-    - cron:  '0 * * * *'
 jobs:
   build:
     runs-on: ubuntu-latest
