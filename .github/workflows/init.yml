@@ -2,6 +2,10 @@ name: CI
 on:
   push:
   workflow_dispatch:
+    inputs:
+      releaseType:
+        required: true
+        default: minor
   repository_dispatch:
     types: changeme
   schedule:
@@ -13,6 +17,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: x
       run: |
+        echo rel type $INPUT_RELEASETYPE
         npm install semver --quiet
         echo v$(node_modules/.bin/semver -i minor $(curl --silent "https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest" | jq -r .tag_name))
         echo "::set-env name=PIPER_version::v$(node_modules/.bin/semver -i minor $(curl --silent "https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest" | jq -r .tag_name))"
